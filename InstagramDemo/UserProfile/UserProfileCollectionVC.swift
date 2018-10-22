@@ -44,11 +44,16 @@ class UserProfileCollectionVC: UICollectionViewController, UICollectionViewDeleg
                 try Auth.auth().signOut()
                 
                 // what's happens? we need to present some kind of login controller
-                let loginVC = LoginVC()
-                let navigation = UINavigationController(rootViewController: loginVC)
-                self.present(navigation, animated: true, completion: nil)
-                print("loged out user")
+                DispatchQueue.main.async {
+                    print("loged out user")
+
+                    let loginVC = LoginVC()
+                    let navigation = UINavigationController(rootViewController: loginVC)
+                    UIApplication.shared.keyWindow?.rootViewController = navigation
+                }
                 
+                
+
             }catch let signOutError {
                 print("Failed to sign out", signOutError.localizedDescription)
             }

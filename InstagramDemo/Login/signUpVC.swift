@@ -162,10 +162,12 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                         return
                     }else {
                         print("Successfully to save info into db:")
-    
-                        guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else {return}
-                        mainTabBarController.setupViewControllers()
-                        self.dismiss(animated: true, completion: nil)
+                        
+                        DispatchQueue.main.async {
+                            let mainTabbar = MainTabBarController()
+                            UIApplication.shared.keyWindow?.rootViewController = mainTabbar
+                            mainTabbar.setupViewControllers()
+                        }
                     }
                 })
                 

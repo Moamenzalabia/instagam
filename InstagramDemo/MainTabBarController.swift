@@ -16,16 +16,7 @@ class MainTabBarController: UITabBarController {
         
            super.viewDidLoad()
         
-        if Auth.auth().currentUser == nil {
-            
-            // show if not logged in
-            DispatchQueue.main.async {
-                let loginVC = LoginVC()
-                let navController = UINavigationController(rootViewController: loginVC)
-               self.present(navController, animated: true, completion: nil)
-            }
-            return
-        }
+      
         setupViewControllers()
         
     }

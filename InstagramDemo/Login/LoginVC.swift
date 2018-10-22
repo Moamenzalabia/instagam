@@ -97,12 +97,14 @@ class LoginVC: UIViewController {
             if let  err = error {
                 print("Failed to sign in with email: ", err.localizedDescription)
                 return
-            }else {
-                print("Successfully logged back in with user: ", Auth.auth().currentUser?.uid ?? "")
+            } else {
+                print("Successfully logged back in with user: ", Auth.auth().currentUser?.displayName)
                 
-                guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else {return}
-                mainTabBarController.setupViewControllers()
-                self.dismiss(animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    let mainTabbar = MainTabBarController()
+                    UIApplication.shared.keyWindow?.rootViewController = mainTabbar
+                    mainTabbar.setupViewControllers()
+                }
             }
        }
     }
@@ -136,6 +138,10 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+//        if let user = Auth.auth().currentUser {
+//            print(user.email)
+//        }
         
         view.addSubview(logoContainerView)
         logoContainerView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 180 )
