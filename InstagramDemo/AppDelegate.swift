@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
-                
+        
         if Auth.auth().currentUser == nil {
             
             // show if not logged in
@@ -27,10 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let navController = UINavigationController(rootViewController: loginVC)
             window?.rootViewController = navController
            
-        } else {
+         } else {
             window?.rootViewController = MainTabBarController()
         }
-        
+    
         
         
         return true

@@ -1,10 +1,7 @@
-//
 //  LoginVC.swift
 //  InstagramDemo
-//
 //  Created by MOAMEN on 7/27/1397 AP.
 //  Copyright © 1397 MOAMEN. All rights reserved.
-//
 
 import UIKit
 import Firebase
@@ -138,10 +135,6 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-//        if let user = Auth.auth().currentUser {
-//            print(user.email)
-//        }
         
         view.addSubview(logoContainerView)
         logoContainerView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 180 )

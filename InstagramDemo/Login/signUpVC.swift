@@ -69,7 +69,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         let isFormVaild = emailTextField.text?.count ?? 0 > 0 && userNameTextField.text?.count ?? 0 > 0 && passWordTextField.text?.count ?? 0 > 0
         if isFormVaild {
             signUpButton.isEnabled = true
-            signUpButton.backgroundColor = UIColor.rgb(red: 17, green: 154, blue: 237)
+            signUpButton.backgroundColor = .mainBlue()
             
         } else {
             signUpButton.isEnabled = false
@@ -128,16 +128,16 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         guard let email = emailTextField.text, email.count > 0 else {return}
         guard let username = userNameTextField.text, username.count > 0 else {return}
         guard let password = passWordTextField.text, password.count > 0 else {return}
-        guard let uid = Auth.auth().currentUser?.uid else{return}
+        //guard let uid = Auth.auth().currentUser?.uid else{return}
        
         //Mark: to create user into firebase Authentcation
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             if let err = error {
                         print("Failed to create user:", err.localizedDescription)
             }else {
-                print("Successfully  created user", uid)
+                print("Successfully  created user", user?.uid ?? "")
             }
-          
+        
             guard let image = self.plusPhotoButton.imageView?.image  else {return}
             guard let uploadData = image.jpegData(compressionQuality: 0.1) else {return}
             let filename = NSUUID().uuidString
@@ -153,7 +153,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                 let downloadURL = metadata.downloadURL()!.absoluteString
                 print("Successfully uploaded profile image :", downloadURL)
                 let dictionaryValues = ["username": username, "profileImageUrl": downloadURL]
-                let values = [uid: dictionaryValues]
+                let values = [user?.uid: dictionaryValues]
                 
                 //Mark: save user name and imagelink into firebase database
                 Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, referrnce) in
@@ -229,39 +229,6 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
     }
     
-}
 
-//Mark: custtom  cnstrain's function to apply autolayout concept in any thing in my app
-extension UIView {
-    
-    func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat,paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height:CGFloat)  {
-        
-        translatesAutoresizingMaskIntoConstraints = false
-        
-        if let top = top {
-            self.topAnchor.constraint(equalTo: top, constant: paddingTop).isActive = true
-        }
-        
-        if let left = left {
-            self.leftAnchor.constraint(equalTo: left, constant: paddingLeft).isActive = true
-        }
-        
-        if let bottom = bottom {
-            self.bottomAnchor.constraint(equalTo: bottom, constant: paddingBottom).isActive = true
-        }
-        
-        if let right = right {
-            self.rightAnchor.constraint(equalTo: right, constant: -paddingRight).isActive = true
-        }
-        
-        if  width != 0 {
-            widthAnchor.constraint(equalToConstant: width).isActive = true
-        }
-        
-        if height != 0 {
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        }
-        
-    }
-    
+
 }
