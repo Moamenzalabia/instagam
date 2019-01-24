@@ -152,7 +152,10 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                 
                 let downloadURL = metadata.downloadURL()!.absoluteString
                 print("Successfully uploaded profile image :", downloadURL)
-                let dictionaryValues = ["username": username, "profileImageUrl": downloadURL]
+                
+                guard let fcmToken = Messaging.messaging().fcmToken else { return }
+                
+                let dictionaryValues = ["username": username, "profileImageUrl": downloadURL, "fcmToken": fcmToken]
                 let values = [user?.uid: dictionaryValues]
                 
                 //Mark: save user name and imagelink into firebase database

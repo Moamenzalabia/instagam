@@ -47,7 +47,7 @@ class CommentCell: UICollectionViewCell {
         let lineSeparatorView = UIView()
         lineSeparatorView.backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230)
         addSubview(lineSeparatorView)
-        lineSeparatorView.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 16, paddingBottom: 4, paddingRight: 8, width: 0, height: 2)
+        lineSeparatorView.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 16, paddingBottom: 4, paddingRight: 8, width: 0, height: 1)
         
     }
     

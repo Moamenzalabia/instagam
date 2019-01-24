@@ -19,4 +19,5 @@ target 'InstagramDemo' do
      pod 'Firebase/Auth', '~> 4.0.0'
      pod 'Firebase/Database', '~> 4.0.0'
      pod 'Firebase/Storage', '~> 4.0.0'
+     pod 'Firebase/Messaging', '~> 4.0.0'
 end

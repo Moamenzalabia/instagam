@@ -9,9 +9,10 @@
 import UIKit
 import CoreData
 import Firebase
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -31,9 +32,77 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = MainTabBarController()
         }
     
-        
+        attemptRegisterForNotifications(application: application)
         
         return true
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+          print("Registered for notifications", deviceToken)
+    }
+    
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        print("Refresh Registered with FCM with token", fcmToken)
+    }
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("Registered with FCM with token", fcmToken)
+    }
+    
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler(.alert)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let followerId = userInfo["followerId"] as? String {
+            
+        
+            // I want to push the UserProfileController for followerId somehow
+            let userProfileController = UserProfileCollectionVC(collectionViewLayout: UICollectionViewFlowLayout())
+            userProfileController.userId = followerId
+            
+            // how do we access our main UI from AppDelegate
+            if let mainTabBarController = window?.rootViewController as? MainTabBarController {
+                
+                mainTabBarController.selectedIndex = 0
+                
+                mainTabBarController.presentedViewController?.dismiss(animated: true, completion: nil)
+                
+                if let homeNavigationController = mainTabBarController.viewControllers?.first as? UINavigationController {
+                    homeNavigationController.pushViewController(userProfileController, animated: true)
+                }
+            }
+        }
+    }
+    
+    private func attemptRegisterForNotifications(application: UIApplication){
+        print("Attempting to register APNS...")
+        
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+        
+        //user notifications auth
+        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: options) { (granted, error) in
+            
+            if let error = error {
+                print("Failed to  request auth", error.localizedDescription)
+                return
+            }
+            
+            if granted{
+                print("Auth granted")
+            }else {
+                print("Auth denied")
+            }
+            
+        }
+        
+        application.registerForRemoteNotifications()
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

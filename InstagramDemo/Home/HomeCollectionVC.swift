@@ -32,6 +32,7 @@ class HomeCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
     
     @objc fileprivate func handleRefresh() {
         posts.removeAll()
+        collectionView.reloadData()
         fetchAllPosts()
 
     }
@@ -50,8 +51,8 @@ class HomeCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
             , with: { (snapshot) in
                 
                 guard let userIdsDictionary = snapshot.value as? [String: Any] else { return }
+                
                 userIdsDictionary.forEach({ (key, value) in
-                    
                     Database.fetchUserWithUID(uid: key, completion: { (user) in
                         
                         self.fetchPostsWithUser(user: user)
@@ -87,6 +88,7 @@ class HomeCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
             self.collectionView?.refreshControl?.endRefreshing()
         
             guard let postsDictionaries = snapshot.value as? [String: Any] else { return }
+            
             postsDictionaries.forEach({ (key ,value) in
                 guard let valueDictionary = value as? [String: Any] else { return }
                 var post = Post(user: user, dictionary: valueDictionary)
@@ -110,6 +112,7 @@ class HomeCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
                     print("Failed to fetch like info for post", error.localizedDescription)
                 })
             })
+
         }) { (error) in
             print("Failed to fetch posts: ", error.localizedDescription)
             

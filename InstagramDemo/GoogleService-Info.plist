@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>164002604567-acaev4a8ru6giulkk59e6vi5jdvnust8.apps.googleusercontent.com</string>
+	<string>164002604567-rvadancocp49q81p7venojvlh9f93cnl.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.164002604567-acaev4a8ru6giulkk59e6vi5jdvnust8</string>
+	<string>com.googleusercontent.apps.164002604567-rvadancocp49q81p7venojvlh9f93cnl</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAERJOHucO0-yIFABdgIu0JVWiA2JxN580</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,23 +17,23 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>moamen.InstagramDemo</string>
+	<string>com.moamen.InstagramDemonew</string>
 	<key>PROJECT_ID</key>
 	<string>instamramfirebase-8c7d5</string>
 	<key>STORAGE_BUCKET</key>
 	<string>instamramfirebase-8c7d5.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:164002604567:ios:144fa7dbb7c49cc2</string>
+	<string>1:164002604567:ios:7b002a15a02e82ed</string>
 	<key>DATABASE_URL</key>
 	<string>https://instamramfirebase-8c7d5.firebaseio.com</string>
 </dict>

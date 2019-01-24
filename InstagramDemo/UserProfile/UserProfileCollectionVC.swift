@@ -1,7 +1,6 @@
 //
 // UserProfileCollectionVC.swift
 //  InstagramDemo
-//
 //  Created by MOAMEN on 7/26/1397 AP.
 //  Copyright © 1397 MOAMEN. All rights reserved.
 //
@@ -11,7 +10,6 @@ import Firebase
 
 class UserProfileCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, UserProfileHeaderDelegate {
     
-    var user :User?
     let cellId = "cellId"
     let homePhotoCellId = "homePhotoCellId"
     var userId: String?
@@ -33,7 +31,6 @@ class UserProfileCollectionVC: UICollectionViewController, UICollectionViewDeleg
         super.viewDidLoad()
         
         collectionView?.backgroundColor = UIColor.white
-        
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "headerId")
         collectionView?.register(UserProfilePhotoCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(HomePhotoCell.self, forCellWithReuseIdentifier: homePhotoCellId)
@@ -45,6 +42,48 @@ class UserProfileCollectionVC: UICollectionViewController, UICollectionViewDeleg
     }
     
     var posts = [Post]()
+    var isFinishedPaging = false
+    
+    fileprivate func paginatePosts() {
+        
+        guard let uid = self.user?.uid else {return}
+        
+        let ref = Database.database().reference().child("posts").child(uid)
+        var query = ref.queryOrdered(byChild: "creationDate")
+        
+        if posts.count > 0{
+            let value = posts.last?.creationDate?.timeIntervalSince1970
+            query = query.queryEnding(atValue: value)
+        }
+        
+        query.queryLimited(toLast: 4).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            guard var allObjects = snapshot.children.allObjects as? [DataSnapshot] else {return}
+            allObjects.reverse()
+            
+            if allObjects.count < 4 {
+                self.isFinishedPaging = true
+            }
+            
+            if self.posts.count > 0 && allObjects.count > 0 {
+                allObjects.removeFirst()
+            }
+            
+            guard let user = self.user else {return}
+            
+            allObjects.forEach({ (snapshot) in
+                guard let dictionary = snapshot.value as? [String: Any] else { return}
+                var post = Post(user: user, dictionary: dictionary)
+                post.Id = snapshot.key
+                self.posts.append(post)
+            })
+            self.collectionView?.reloadData()
+            
+        }) { (error) in
+            print("Failed to paginate for posts", error .localizedDescription)
+        }
+        
+    }
     
     fileprivate func fetchOrderedPosts() {
         
@@ -116,6 +155,12 @@ class UserProfileCollectionVC: UICollectionViewController, UICollectionViewDeleg
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        
+        // show you how to fire off the paginate call
+        if indexPath.item == self.posts.count - 1  && !isFinishedPaging{
+            paginatePosts()
+        }
+        
         if isGridView{
              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserProfilePhotoCell
              cell.post = posts[indexPath.item]
@@ -171,6 +216,7 @@ class UserProfileCollectionVC: UICollectionViewController, UICollectionViewDeleg
         
     }
     
+    var user :User?
     //Mark: retraive and fetch user data from firebase
     fileprivate func fetchUser() {
         
@@ -178,9 +224,9 @@ class UserProfileCollectionVC: UICollectionViewController, UICollectionViewDeleg
     
         Database.fetchUserWithUID(uid: uid) { (user) in
             self.user = user
-           // self.navigationItem.title = self.user!.username
+            self.navigationItem.title = self.user!.username
             self.collectionView.reloadData()
-            self.fetchOrderedPosts()
+            self.paginatePosts()
             
         }
         

@@ -18,6 +18,9 @@ class UserProfileHeader: UICollectionViewCell {
     
     var delegate: UserProfileHeaderDelegate?
     
+    var numberofPosts = 0
+    var numberOfFollower = 0
+    var numverOfFolloing = 0
     //Mark: user object from  user model
     var user: User? {
         didSet{
@@ -25,7 +28,6 @@ class UserProfileHeader: UICollectionViewCell {
             //Mark: fetch user profile image from model
             guard let profileImageUrl = user?.profileImageUrl else {return}
             profileImageView.loadImage(urlString: profileImageUrl)
-            
             usernameLabel.text = user?.username
             
             setupEditFollowButton()
