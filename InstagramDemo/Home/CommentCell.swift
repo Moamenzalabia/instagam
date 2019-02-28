@@ -20,6 +20,7 @@ class CommentCell: UICollectionViewCell {
         }
     }
     
+    // comment text
     let commentTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 14)
@@ -27,6 +28,7 @@ class CommentCell: UICollectionViewCell {
         return textView
     }()
     
+    //user image who do comment
     let profileImageView: CustomImageView = {
         let image = CustomImageView()
         image.contentMode = .scaleAspectFill

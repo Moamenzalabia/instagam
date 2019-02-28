@@ -20,14 +20,11 @@ class SearchCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
     }()
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-
-        
         if searchText.isEmpty {
             filteredUsers = users
             
         }else{
         filteredUsers = self.users.filter({ (user) -> Bool in
-            
             return user.username!.lowercased().contains(searchText.lowercased())
            })
        }

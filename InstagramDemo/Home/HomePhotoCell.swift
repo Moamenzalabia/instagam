@@ -4,6 +4,7 @@
 //  Copyright © 1397 MOAMEN. All rights reserved.
 
 import UIKit
+import Firebase
 
 /* This is just a protocol definition, not an execution */
 protocol HomePhotoCellDelegate {
@@ -75,7 +76,7 @@ class HomePhotoCell: UICollectionViewCell {
         return label
     }()
     
-    let optionsButton: UIButton = {
+    lazy var optionsButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("•••", for: .normal)
         button.setTitleColor(.black, for: .normal)

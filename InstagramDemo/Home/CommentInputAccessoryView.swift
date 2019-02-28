@@ -67,6 +67,7 @@ class CommentInputAccessoryView: UIView {
         
     }
     
+    //  delegate action that save comment into firebase 
     @objc func handleSubmit() {
         guard let comment = commentTextView.text else { return}
         delegate?.didSubmit(for: comment)

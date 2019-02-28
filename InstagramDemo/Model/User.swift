@@ -1,10 +1,7 @@
-//
 //  User.swift
 //  InstagramDemo
-//
 //  Created by MOAMEN on 7/26/1397 AP.
 //  Copyright © 1397 MOAMEN. All rights reserved.
-//
 
 import Foundation
 

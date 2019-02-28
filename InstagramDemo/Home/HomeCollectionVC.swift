@@ -21,7 +21,6 @@ class HomeCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         collectionView?.refreshControl = refreshControl
-        
         setupNavigationItems()
         fetchAllPosts()
     }
@@ -51,7 +50,6 @@ class HomeCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
             , with: { (snapshot) in
                 
                 guard let userIdsDictionary = snapshot.value as? [String: Any] else { return }
-                
                 userIdsDictionary.forEach({ (key, value) in
                     Database.fetchUserWithUID(uid: key, completion: { (user) in
                         
@@ -96,7 +94,6 @@ class HomeCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
                 
                 guard let uid = Auth.auth().currentUser?.uid else { return }
                 Database.database().reference().child("likes").child(key).child(uid).observe(.value, with: { (snapshot) in
-                    
                     if let value = snapshot.value as? Int, value == 1 {
                         post.hasLiked = true
                     }else {
@@ -160,6 +157,7 @@ class HomeCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
         return cell
     }
     
+    // go to commentCollectionView Screen
     func didTabComment(post: Post) {
         let commentsController = CommentsCollectionVC(collectionViewLayout: UICollectionViewFlowLayout())
         commentsController.post = post
@@ -174,8 +172,7 @@ class HomeCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
         
         guard let postId = post.Id else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let values = [uid: post.hasLiked == true ? 0 : 1 ]
-
+        let values = [uid: post.hasLiked == true ? 1 : 0]
         Database.database().reference().child("likes").child(postId).updateChildValues(values) { (error, _) in
            if let error = error {
                 print("Failed to like post", error.localizedDescription)

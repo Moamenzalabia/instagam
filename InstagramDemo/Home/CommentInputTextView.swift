@@ -28,7 +28,7 @@ class CommentInputTextView: UITextView {
     }
     
     @objc func handleTextChange() {
-        placeholderLabel.isHidden = !self.text.isEmpty
+        placeholderLabel.isHidden = !self.text.isEmpty // to change placeholder text deppend on status of user writting
     }
     
     required init?(coder aDecoder: NSCoder) {

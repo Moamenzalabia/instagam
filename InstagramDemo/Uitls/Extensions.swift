@@ -1,10 +1,7 @@
-//
 //  Extensions.swift
 //  InstagramDemo
-//
 //  Created by MOAMEN on 7/24/1397 AP.
 //  Copyright © 1397 MOAMEN. All rights reserved.
-//
 
 
 import UIKit
@@ -95,3 +92,13 @@ extension Date {
     }
 }
 
+extension UIViewController {
+    // show alert to user at any step he do it
+    func showAlert(_ alertMessage: String, title: String ) {
+        let alertController = UIAlertController(title: title, message: alertMessage, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(action)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+}

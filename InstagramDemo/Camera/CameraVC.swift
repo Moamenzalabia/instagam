@@ -9,7 +9,6 @@ import AVFoundation
 class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate, UIViewControllerTransitioningDelegate {
 
     let dismissButton: UIButton = {
-        
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "right_arrow_shadow"), for: .normal)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
@@ -22,12 +21,10 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate, UIViewControlle
     }
     
     let capturePhotoButton: UIButton = {
-        
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "capture_photo"), for: .normal)
         button.addTarget(self, action: #selector(handleCapturePhoto), for: .touchUpInside)
         return button
-        
     }()
    
     override func viewDidLoad() {
@@ -41,10 +38,12 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate, UIViewControlle
     let customeAnimationPresentor = CustomeAnimationPresentor()
     let customeAnimationDismisser = CustomeAnimationDismisser()
     
+    // to present vc  with cusrom animation
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return customeAnimationPresentor
     }
     
+    // to dismiss vc with custom animation
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return customeAnimationDismisser
     }
@@ -65,7 +64,6 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate, UIViewControlle
     
     @objc func handleCapturePhoto() {
         let settings = AVCapturePhotoSettings()
-        
         guard let previewFormatType = settings.availablePreviewPhotoPixelFormatTypes.first else { return }
         settings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String : previewFormatType]
         
@@ -73,7 +71,6 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate, UIViewControlle
     }
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-        
         guard error == nil else {
             print("Fail to capture photo: \(String(describing: error))")
             return
@@ -86,7 +83,6 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate, UIViewControlle
         containerView.previewImageView.image = previewImage
         view.addSubview(containerView)
         containerView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
     }
     
     let output = AVCapturePhotoOutput()
@@ -94,9 +90,8 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate, UIViewControlle
     fileprivate func setupCaptureSession() {
         
         let captureSession = AVCaptureSession()
-        
         // 1.setup inputs
-        guard  let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else { return }
+        guard  let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else { return } // video because it's defualt for image
         do{
             let input = try AVCaptureDeviceInput(device: captureDevice )
             if captureSession.canAddInput(input){
@@ -113,7 +108,6 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate, UIViewControlle
         let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             previewLayer.frame = view.frame
             view.layer.addSublayer(previewLayer)
-        
         captureSession.startRunning()
        
     }

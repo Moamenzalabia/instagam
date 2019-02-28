@@ -1,10 +1,7 @@
-//
 //  AppDelegate.swift
 //  InstagramDemo
-//
 //  Created by MOAMEN on 7/24/1397 AP.
 //  Copyright © 1397 MOAMEN. All rights reserved.
-//
 
 import UIKit
 import CoreData
@@ -38,7 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-          print("Registered for notifications", deviceToken)
+        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        print("Registered for notifications", token)
     }
     
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
@@ -56,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
         let userInfo = response.notification.request.content.userInfo
+        print( "mmmmmmmmmmmmmmmmmmmmm", userInfo)
         
         if let followerId = userInfo["followerId"] as? String {
             

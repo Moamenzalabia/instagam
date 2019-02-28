@@ -1,10 +1,7 @@
-//
 //  FirebaseUtils.swift
 //  InstagramDemo
-//
 //  Created by MOAMEN on 8/28/1397 AP.
 //  Copyright © 1397 MOAMEN. All rights reserved.
-//
 
 import Foundation
 import Firebase

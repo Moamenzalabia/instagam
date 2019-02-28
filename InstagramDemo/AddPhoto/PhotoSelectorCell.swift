@@ -1,25 +1,19 @@
-//
 //  PhotoSelectorCell.swift
 //  InstagramDemo
-//
 //  Created by MOAMEN on 8/8/1397 AP.
 //  Copyright © 1397 MOAMEN. All rights reserved.
-//
 
 import UIKit
 
 class PhotoSelectorCell: UICollectionViewCell {
     
-    
     let photoImageView: UIImageView = {
-        
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         image.backgroundColor = UIColor.lightGray
         
         return image
-        
     }()
     
     override init(frame: CGRect) {

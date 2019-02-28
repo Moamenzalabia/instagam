@@ -28,8 +28,7 @@ class CommentsCollectionVC: UICollectionViewController, UICollectionViewDelegate
     fileprivate func fetchComments(){
         
         guard let postId = self.post?.Id else { return }
-       
-        let ref = Database.database().reference().child("comments").child(postId)
+               let ref = Database.database().reference().child("comments").child(postId)
         ref.observe(.childAdded, with: { (snapshot) in
             
             guard let  commentsDictionary = snapshot.value as? [String: Any] else { return }
@@ -50,6 +49,7 @@ class CommentsCollectionVC: UICollectionViewController, UICollectionViewDelegate
         return comments.count
     }
     
+    // to make comment size no fexed height
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 60)
@@ -95,6 +95,7 @@ class CommentsCollectionVC: UICollectionViewController, UICollectionViewDelegate
         
     }()
     
+    // delegate func to save comment into firebase
     func didSubmit(for comment: String) {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
