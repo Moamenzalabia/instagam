@@ -5,9 +5,9 @@
 
 import UIKit
 import Firebase
-import FBSDKCoreKit
-import FacebookLogin
-import FacebookCore
+//import FBSDKCoreKit
+//import FacebookLogin
+//import FacebookCore
 import FBSDKLoginKit
 
 class LoginVC: UIViewController, UITextFieldDelegate{
@@ -86,7 +86,6 @@ class LoginVC: UIViewController, UITextFieldDelegate{
     
     @objc func handleLogin() {
         loginButton.setupButtonAnimation()
-        
         guard let email = emailTextField.text else {return}
         guard let password = passWordTextField.text else {return}
 
@@ -96,6 +95,7 @@ class LoginVC: UIViewController, UITextFieldDelegate{
                 return
             } else {
                 self.showAlert("Successfully you are logged In : \(Auth.auth().currentUser?.displayName ?? "")", title: "Successfully")
+                UserDefaults.standard.set(true, forKey: "isLogedIn")
                 DispatchQueue.main.async {
                     let mainTabbar = MainTabBarController()
                     UIApplication.shared.keyWindow?.rootViewController = mainTabbar

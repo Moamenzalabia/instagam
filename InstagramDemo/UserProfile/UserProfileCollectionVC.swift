@@ -100,6 +100,7 @@ class UserProfileCollectionVC: UICollectionViewController, UICollectionViewDeleg
             
             do{
                 try Auth.auth().signOut()
+                //UserDefaults.standard.set(false, forKey: "isLogedIn")
                 // what's happens? we need to present some kind of login controller
                 DispatchQueue.main.async {
                     let loginVC = LoginVC()

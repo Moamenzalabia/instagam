@@ -13,13 +13,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         
-        if Auth.auth().currentUser == nil {
-            
+        if !UserDefaults.standard.bool(forKey: "isLogedIn") {
+            //Auth.auth().currentUser == nil && UserDefaults.standard.bool(forKey: "isLogedIn") == true
             // show if not logged in
             let loginVC = LoginVC()
             let navController = UINavigationController(rootViewController: loginVC)
