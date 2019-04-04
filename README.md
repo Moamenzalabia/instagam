@@ -1,4 +1,4 @@
-
+The idea of the application is the same as the idea of Instagram. The user is able to make  a user account and make a post and follow another user. As soon as the follower do following to anohter user, the  follower user shows the second user post's , the second user recieve a notification that tell him this user is following you.  can user open camera and take photo to share it as a post and Saving a picture to a  device ,you can  search about a particular user  to follow him 
 
 launch screen
 ![1](https://user-images.githubusercontent.com/28659588/54063058-df04f780-4212-11e9-9d20-28b3d3349831.png)
