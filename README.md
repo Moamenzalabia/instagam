@@ -4,5 +4,5 @@ The idea of the InstagramDemo application is the same as the idea of Instagram. 
 
  tool's in this app:-
 
- Firebase authentication, firebase storage, firebase cloud function, firebase notifications, core animation, media library,   user default database, I faceed some problem in push notifications, open media library, fetch user post's 
+ Firebase Authentication, Firebase Storage, Firebase Cloud Function, Firebase Notifications, Core Animation, Media Library,   user default database, I faceed some problem in push notifications, open media library, fetch user post's 
  
